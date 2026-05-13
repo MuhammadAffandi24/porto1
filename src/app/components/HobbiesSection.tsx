@@ -29,7 +29,7 @@ export function HobbiesSection() {
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl sm:text-4xl md:text-6xl font-bold text-white pb-2 mb-4"
+            className="text-3xl sm:text-4xl md:text-6xl font-bold bg-gradient-to-r from-white via-white to-[#FFD700] bg-clip-text text-transparent pb-2 mb-4"
           >
             Hobi & Minat
           </motion.h2>
