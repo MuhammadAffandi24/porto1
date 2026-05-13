@@ -35,7 +35,7 @@ export function BioSection() {
         >
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12 sm:mb-16 md:mb-20 gap-4">
             <div>
-              <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold bg-gradient-to-r from-white via-white to-[#FFD700] bg-clip-text text-transparent pb-2 mb-4">
+              <h2 className="section-heading text-3xl sm:text-4xl md:text-6xl font-bold bg-gradient-to-r from-white via-white to-[#FFD700] bg-clip-text text-transparent pb-2 mb-4">
                 Tentang Saya
               </h2>
               {/* Line Burgundy-Navy Seragam */}

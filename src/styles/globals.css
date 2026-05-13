@@ -97,3 +97,29 @@ img {
     -webkit-text-fill-color: transparent;
   }
 }
+
+/* Mobile-first heading styles - fallback to solid colors */
+@media (max-width: 768px) {
+  .section-heading {
+    color: #ffffff !important;
+    text-shadow: 0 0 12px rgba(255, 215, 0, 0.4);
+  }
+
+  /* Override gradient with solid white for mobile */
+  .section-heading {
+    background: none !important;
+    background-clip: unset !important;
+    -webkit-background-clip: unset !important;
+    -webkit-text-fill-color: unset !important;
+  }
+}
+
+/* Desktop gradient */
+@media (min-width: 769px) {
+  .section-heading {
+    background: linear-gradient(to right, #ffffff, #ffffff 65%, #ffd700);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
