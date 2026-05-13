@@ -92,7 +92,7 @@ export function HeroSection() {
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="text-base sm:text-lg md:text-2xl bg-gradient-to-r from-accent via-accent to-secondary bg-clip-text text-transparent tracking-wide font-semibold"
+                className="text-base sm:text-lg md:text-2xl text-accent tracking-wide font-semibold"
               >
                 {data.title}
               </motion.p>
