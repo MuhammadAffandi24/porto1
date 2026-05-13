@@ -3,10 +3,12 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
 export function HobbiesSection() {
+  // Menggunakan path lokal dari folder public/images
   const images = [
-    "https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1511886929837-354d827aae26?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1551958219-acbc608c6377?q=80&w=1200&auto=format&fit=crop",
+    "/images/DSC03400.JPG",
+    "/images/NEX08361-194.JPG",
+    "/images/RPS_1109.jpg",
+    "/images/RPS_1115.jpg",
   ];
 
   const [emblaRef] = useEmblaCarousel({ loop: true }, [
@@ -14,14 +16,10 @@ export function HobbiesSection() {
   ]);
 
   return (
-    // Background disesuaikan menjadi #050505 agar seragam dengan Experience
     <section className="relative py-48 px-6 overflow-hidden bg-[#050505]">
-      {/* Background Glows (Disamakan persis dengan ExperienceSection) */}
+      {/* Background Glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Cahaya Burgundy - Sisi Kiri Atas */}
         <div className="absolute top-1/4 -left-10 w-[600px] h-[600px] bg-[#4a1a1e]/20 rounded-full blur-[120px]" />
-
-        {/* Cahaya Navy Blue - Sisi Kanan Bawah */}
         <div className="absolute bottom-1/4 -right-10 w-[600px] h-[600px] bg-[#1a233a]/30 rounded-full blur-[140px]" />
       </div>
 
@@ -35,7 +33,6 @@ export function HobbiesSection() {
           >
             Hobi & Minat
           </motion.h2>
-          {/* Garis Burgundy-Navy Seragam */}
           <motion.div
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
@@ -43,7 +40,6 @@ export function HobbiesSection() {
           />
         </div>
 
-        {/* Card Container - Glassmorphism style */}
         <motion.div
           whileHover={{ y: -10 }}
           className="bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden p-4 md:p-8 shadow-2xl transition-all duration-500"
@@ -51,7 +47,7 @@ export function HobbiesSection() {
           <div className="grid gap-10">
             {/* Carousel Foto */}
             <div
-              className="overflow-hidden rounded-2xl border border-white/5 shadow-inner"
+              className="overflow-hidden rounded-2xl border border-white/5 shadow-inner cursor-grab active:cursor-grabbing"
               ref={emblaRef}
             >
               <div className="flex">
@@ -62,10 +58,10 @@ export function HobbiesSection() {
                   >
                     <img
                       src={src}
-                      alt={`Football hobby ${index}`}
+                      alt={`Hobby image ${index}`}
                       className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700"
+                      loading="lazy"
                     />
-                    {/* Overlay Navy-Burgundy halus pada gambar */}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/80 via-transparent to-transparent pointer-events-none" />
                   </div>
                 ))}
@@ -80,17 +76,13 @@ export function HobbiesSection() {
               className="space-y-4 text-center max-w-2xl mx-auto pb-4"
             >
               <h3 className="text-3xl font-bold tracking-tight text-white group-hover:text-[#ffd700] transition-colors">
-                Sepakbola & Futsal
+                Sepakbola/Futsal/Mini-Soccer
               </h3>
-              {/* Font diseragamkan: Leading 1.8 & Slate-400/60 */}
               <p className="text-base leading-[1.8] text-foreground/60 font-medium">
-                Saya penggemar berat sepakbola, terutama dalam menganalisis
-                taktik permainan yang presisi. Bagi saya, berada di lapangan
-                hijau bukan sekadar olahraga, melainkan cara melatih kerjasama
-                tim dan strategi dalam menghadapi tekanan.
+                Selain berfokus pada data, saya sangat menikmati aktivitas fisik
+                seperti sepakbola dan futsal untuk menjaga keseimbangan.
               </p>
 
-              {/* Dekorasi Footer Kartu agar seragam dengan Experience */}
               <div className="flex items-center justify-center gap-4 pt-4">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#ffd700]/50 shadow-[0_0_8px_#ffd700]" />
                 <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
