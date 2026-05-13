@@ -16,7 +16,7 @@ export function HobbiesSection() {
   ]);
 
   return (
-    <section className="relative py-48 px-6 overflow-hidden bg-[#050505]">
+    <section className="relative py-24 sm:py-36 md:py-48 px-4 sm:px-6 overflow-hidden bg-[#050505]">
       {/* Background Glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 -left-10 w-[600px] h-[600px] bg-[#4a1a1e]/20 rounded-full blur-[120px]" />
@@ -24,12 +24,12 @@ export function HobbiesSection() {
       </div>
 
       <div className="container mx-auto max-w-4xl relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 md:mb-16">
           <motion.h2
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-slate-200 to-accent bg-clip-text text-transparent pb-2 mb-4"
+            className="text-3xl sm:text-4xl md:text-6xl font-bold bg-gradient-to-r from-white via-slate-200 to-accent bg-clip-text text-transparent pb-2 mb-4"
           >
             Hobi & Minat
           </motion.h2>
@@ -42,9 +42,9 @@ export function HobbiesSection() {
 
         <motion.div
           whileHover={{ y: -10 }}
-          className="bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden p-4 md:p-8 shadow-2xl transition-all duration-500"
+          className="bg-white/[0.02] backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden p-4 sm:p-6 md:p-8 shadow-2xl transition-all duration-500"
         >
-          <div className="grid gap-10">
+          <div className="grid gap-6 md:gap-10">
             {/* Carousel Foto */}
             <div
               className="overflow-hidden rounded-2xl border border-white/5 shadow-inner cursor-grab active:cursor-grabbing"
@@ -73,17 +73,17 @@ export function HobbiesSection() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="space-y-4 text-center max-w-2xl mx-auto pb-4"
+              className="space-y-3 md:space-y-4 text-center max-w-2xl mx-auto pb-2 md:pb-4"
             >
-              <h3 className="text-3xl font-bold tracking-tight text-white group-hover:text-[#ffd700] transition-colors">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white group-hover:text-[#ffd700] transition-colors">
                 Sepakbola/Futsal/Mini-Soccer
               </h3>
-              <p className="text-base leading-[1.8] text-foreground/60 font-medium">
+              <p className="text-sm sm:text-base leading-[1.8] text-foreground/60 font-medium">
                 Selain berfokus pada data, saya sangat menikmati aktivitas fisik
                 seperti sepakbola dan futsal untuk menjaga keseimbangan.
               </p>
 
-              <div className="flex items-center justify-center gap-4 pt-4">
+              <div className="flex items-center justify-center gap-4 pt-3 md:pt-4">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#ffd700]/50 shadow-[0_0_8px_#ffd700]" />
                 <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
                 <div className="w-1.5 h-1.5 rounded-full bg-[#4a1a1e] shadow-[0_0_8px_#4a1a1e]" />

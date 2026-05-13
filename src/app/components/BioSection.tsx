@@ -19,7 +19,7 @@ export function BioSection() {
   ];
 
   return (
-    <section className="relative py-48 px-6 bg-[#050505] overflow-hidden">
+    <section className="relative py-24 sm:py-36 md:py-48 px-4 sm:px-6 bg-[#050505] overflow-hidden">
       {/* Background Glows (Diselaraskan dengan Experience & Hobbies) */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 -left-10 w-[600px] h-[600px] bg-[#4a1a1e]/20 rounded-full blur-[120px]" />
@@ -33,9 +33,9 @@ export function BioSection() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-end justify-between mb-20">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12 sm:mb-16 md:mb-20 gap-4">
             <div>
-              <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white via-slate-200 to-white bg-clip-text text-transparent pb-2 mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold bg-gradient-to-r from-white via-slate-200 to-white bg-clip-text text-transparent pb-2 mb-4">
                 Tentang Saya
               </h2>
               {/* Line Burgundy-Navy Seragam */}
@@ -43,9 +43,9 @@ export function BioSection() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-16 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
             {/* Contact Info Side */}
-            <div className="space-y-8 bg-white/[0.02] backdrop-blur-md p-10 rounded-3xl border border-white/10 shadow-2xl">
+            <div className="space-y-6 md:space-y-8 bg-white/[0.02] backdrop-blur-md p-6 sm:p-8 md:p-10 rounded-3xl border border-white/10 shadow-2xl">
               {contactItems.map((item, index) => {
                 const Icon = item.icon;
                 return (
@@ -57,16 +57,16 @@ export function BioSection() {
                     transition={{ delay: index * 0.1 }}
                     className="group"
                   >
-                    <div className="flex items-center gap-6">
-                      <div className="p-4 bg-white/5 border border-white/10 rounded-2xl group-hover:bg-[#4a1a1e]/20 group-hover:border-[#4a1a1e]/50 transition-all duration-300">
+                    <div className="flex items-center gap-4 md:gap-6">
+                      <div className="p-3 md:p-4 bg-white/5 border border-white/10 rounded-2xl group-hover:bg-[#4a1a1e]/20 group-hover:border-[#4a1a1e]/50 transition-all duration-300 flex-shrink-0">
                         <Icon className="w-5 h-5 text-white/70 group-hover:text-white" />
                       </div>
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
                         {/* Label Gold-ish Tracking Wide */}
                         <p className="text-[10px] font-bold tracking-[0.2em] text-[#ffd700]/60 mb-1 uppercase">
                           {item.label}
                         </p>
-                        <p className="text-lg text-slate-200 font-medium">
+                        <p className="text-sm md:text-lg text-slate-200 font-medium break-words">
                           {item.value}
                         </p>
                       </div>
@@ -90,7 +90,7 @@ export function BioSection() {
               </p>
 
               {/* Deskripsi Seragam: Leading 1.8, Slate/Foreground 60 */}
-              <p className="text-lg leading-[1.8] text-foreground/60 font-medium italic mb-8">
+              <p className="text-sm md:text-lg leading-[1.8] text-foreground/60 font-medium italic mb-8">
                 "{bio.about}"
               </p>
 

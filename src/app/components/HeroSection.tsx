@@ -51,13 +51,13 @@ export function HeroSection() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 py-32">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-16 sm:py-24 md:py-32">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="grid md:grid-cols-5 gap-12 items-center"
+            className="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-12 items-center"
           >
             {/* Photo Section */}
             <div className="md:col-span-2 flex justify-center">
@@ -71,20 +71,19 @@ export function HeroSection() {
                     transition={{ duration: 0.5 }}
                     src={data.photo}
                     alt="Profile"
-                    className="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-accent/50 shadow-2xl"
+                    className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-accent/50 shadow-2xl"
                   />
                 </div>
               </div>
             </div>
 
             {/* Text Content */}
-            <div className="md:col-span-3 space-y-6">
+            <div className="md:col-span-3 space-y-4 md:space-y-6">
               <motion.h1
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                /* Ukuran font dikecilkan ke text-5xl (mobile) dan text-6xl (desktop) */
-                className="text-5xl md:text-6xl font-bold text-foreground tracking-tight"
+                className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground tracking-tight"
               >
                 {data.name}
               </motion.h1>
@@ -93,7 +92,7 @@ export function HeroSection() {
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="text-xl md:text-2xl bg-gradient-to-r from-accent via-accent to-secondary bg-clip-text text-transparent tracking-wide font-semibold"
+                className="text-base sm:text-lg md:text-2xl bg-gradient-to-r from-accent via-accent to-secondary bg-clip-text text-transparent tracking-wide font-semibold"
               >
                 {data.title}
               </motion.p>
@@ -109,7 +108,7 @@ export function HeroSection() {
                 initial={{ x: -20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="text-lg md:text-xl leading-relaxed text-foreground/80 text-justify md:text-left"
+                className="text-sm sm:text-base md:text-lg leading-relaxed text-foreground/80 text-justify md:text-left"
               >
                 {data.story}
               </motion.p>
