@@ -45,10 +45,7 @@ export default function App() {
           const offsetTop = element.offsetTop;
           const offsetHeight = element.offsetHeight;
 
-          if (
-            scrollPosition >= offsetTop &&
-            scrollPosition < offsetTop + offsetHeight
-          ) {
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
             setActiveSection(section.id);
             break;
           }
@@ -97,7 +94,7 @@ export default function App() {
           >
             © 2026 — Muhammad Muflih Affandi{" "}
             <span className="bg-gradient-to-r from-accent via-secondary to-accent bg-clip-text text-transparent">
-              Visca Barca
+              - Visca Barca
             </span>
           </motion.p>
         </div>
