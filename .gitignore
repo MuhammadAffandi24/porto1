@@ -1,0 +1,18 @@
+# --- Web Development (React/Vite/Node) ---
+node_modules/
+dist/
+dist-ssr/
+*.local
+.env
+.env.*
+.vercel
+
+# --- Backend (Laravel/PHP) ---
+/vendor/
+public/storage
+public/hot
+storage/*.key
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
