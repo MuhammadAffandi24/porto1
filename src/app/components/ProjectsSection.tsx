@@ -17,28 +17,12 @@ export function ProjectsSection() {
   const projects: Project[] = [
     {
       id: "1",
-      name: "TaxaCore - Legal & Tax KMS",
+      name: "VitaPulse: heart Disease Prediction",
       description:
-        "Sistem Manajemen Pengetahuan (KMS) yang menggunakan Retrieval-Augmented Generation (RAG) untuk dokumen hukum dan pajak Indonesia. Mengimplementasikan PostgreSQL dengan pgvector dan model LLM lokal via Ollama untuk memberikan jawaban berbasis konteks yang akurat.",
-      technologies: ["React", "Laravel", "PostgreSQL", "Ollama", "Python"],
-      link: "https://example.com",
-      github: "https://github.com/username/taxacore",
-    },
-    {
-      id: "2",
-      name: "Multimodal Hate Speech Detection",
-      description:
-        "Proyek penelitian skripsi yang mendeteksi ujaran kebencian pada video pendek (TikTok/YouTube Shorts) menggunakan pendekatan multimodal, menggabungkan fitur teks, audio, dan visual untuk akurasi deteksi yang lebih tinggi.",
-      technologies: ["Python", "PyTorch", "NLP", "IndoBERT"],
-      github: "https://github.com/username/hate-speech-detection",
-    },
-    {
-      id: "3",
-      name: "Sentiment Analysis Dashboard",
-      description:
-        "Dashboard interaktif untuk menganalisis sentimen publik terhadap kebijakan daerah di Kabupaten Wonogiri. Data diambil melalui web scraping dan divisualisasikan untuk mendukung pengambilan keputusan berbasis data.",
-      technologies: ["React", "FastAPI", "Tailwind CSS", "Scikit-Learn"],
-      link: "https://example.com",
+        "Project ini bertujuan untuk memprediksi apakah seseorang memiliki penyakit jantung atau tidak berdarkan beberapa kriteria yang telah ditentukan. Dataset yang digunakan adalah dataset penyakit jantung dari UCI Machine Learning Repository",
+      technologies: ["Python"],
+      link: "https://vitapulseprediction.streamlit.app/",
+      github: "https://github.com/MuhammadAffandi24/MAIProject",
     },
   ];
 
