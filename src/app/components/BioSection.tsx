@@ -23,8 +23,8 @@ export function BioSection() {
   return (
     <section className="relative py-24 sm:py-36 md:py-48 px-4 sm:px-6 bg-[#050505] overflow-hidden">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -left-10 w-[600px] h-[600px] bg-[#4a1a1e]/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 -right-10 w-[600px] h-[600px] bg-[#1a233a]/30 rounded-full blur-[140px]" />
+        <div className="absolute top-1/4 -left-10 w-[600px] h-[600px] bg-[#4a1a1e]/40 rounded-full blur-[120px]" />
+        <div className="absolute bottom-1/4 -right-10 w-[600px] h-[600px] bg-[#1a233a]/40 rounded-full blur-[140px]" />
       </div>
 
       <div className="container mx-auto max-w-6xl relative z-10">

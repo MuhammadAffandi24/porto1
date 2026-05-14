@@ -3,137 +3,93 @@ import { motion } from "motion/react";
 export function HeroSection() {
   const data = {
     name: "Muhammad Affandi",
-    title: "Data Science Student",
-    story:
-      "Mahasiswa S1 Universitas Sebelas Maret Program Studi Sains Data yang memiliki ketertarikan pada bidang data, khususnya Kecerdasan Buatan dan Pembelajaran Mesin. Menyukai perkembangan teknologi dan terbiasa untuk terus belajar serta berinnovasi. Aktif berorganisasi di dalam maupun luar kampus sehingga memiliki kemampuan komunikasi yang baik, percaya diri, dapat diandalkan, serta mampu bekerja secara efektif dan efisien. Selain itu, juga menyukai kegiatan olahraga.",
+    university: "Universitas Sebelas Maret",
+    major: "S1 Sains Data",
     photo: "/images/pp.png",
   };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
-      {/* Background with football stadium */}
+      {/* Background with Stadium Overlay */}
       <div
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 bg-cover bg-center scale-105"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1686168523188-8949907234a5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920')`,
+          backgroundImage: `url('https://images.unsplash.com/photo-1686168523188-8949907234a5?auto=format&fit=crop&q=80&w=1920')`,
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-background/95 via-background/90 to-background"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-background/80 to-transparent"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 via-transparent to-accent/5"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40"></div>
+        <div className="absolute inset-0 bg-radial-gradient from-transparent to-background/90"></div>
       </div>
 
-      {/* Animated particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-accent/20 rounded-full"
-            initial={{
-              x:
-                Math.random() *
-                (typeof window !== "undefined" ? window.innerWidth : 1000),
-              y:
-                Math.random() *
-                (typeof window !== "undefined" ? window.innerHeight : 1000),
-            }}
-            animate={{
-              y: [null, Math.random() * 500],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 10 + 10,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-        ))}
-      </div>
+      {/* Content Container */}
+      <div className="relative z-10 flex flex-col items-center text-center px-6">
+        {/* Profile Image with Glow Effect */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative mb-8"
+        >
+          <div className="absolute -inset-4 bg-accent/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="relative p-1 rounded-full bg-gradient-to-tr from-accent via-secondary to-accent">
+            <img
+              src={data.photo}
+              alt={data.name}
+              className="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover border-4 border-background shadow-2xl"
+            />
+          </div>
+        </motion.div>
 
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 py-16 sm:py-24 md:py-32">
-        <div className="max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+        {/* Text Details */}
+        <div className="space-y-3">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-12 items-center"
+            transition={{ delay: 0.3 }}
+            className="text-4xl md:text-7xl font-black text-foreground tracking-tighter uppercase italic"
           >
-            {/* Photo Section */}
-            <div className="md:col-span-2 flex justify-center">
-              <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-accent via-secondary to-accent rounded-full opacity-75 blur-xl group-hover:opacity-100 transition duration-1000"></div>
+            {data.name}
+          </motion.h1>
 
-                <div className="relative">
-                  <motion.img
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.5 }}
-                    src={data.photo}
-                    alt="Profile"
-                    className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-accent/50 shadow-2xl"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Text Content */}
-            <div className="md:col-span-3 space-y-4 md:space-y-6">
-              <motion.h1
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground tracking-tight"
-              >
-                {data.name}
-              </motion.h1>
-
-              <motion.p
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.3 }}
-                className="text-base sm:text-lg md:text-2xl bg-gradient-to-r from-white to-[#FFD700] bg-clip-text text-transparent tracking-wide font-semibold"
-              >
-                {data.title}
-              </motion.p>
-
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ delay: 0.4 }}
-                className="h-1 w-20 bg-gradient-to-r from-secondary via-accent to-secondary rounded-full"
-              ></motion.div>
-
-              <motion.p
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="text-sm sm:text-base md:text-lg leading-relaxed text-foreground/80 text-justify md:text-left"
-              >
-                {data.story}
-              </motion.p>
-            </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="flex flex-col items-center gap-1"
+          >
+            <span className="px-4 py-1 bg-accent/10 border border-accent/20 rounded-full text-accent text-sm md:text-lg font-bold tracking-widest uppercase">
+              {data.major}
+            </span>
+            <p className="text-foreground/60 text-lg md:text-xl font-medium mt-2">
+              {data.university}
+            </p>
           </motion.div>
         </div>
+
+        {/* Call to Action / Social Placeholder */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="mt-12 flex gap-4"
+        >
+          <div className="h-[1px] w-12 bg-accent/50 self-center"></div>
+          <span className="text-xs uppercase tracking-[0.3em] text-foreground/40 font-bold">
+            Data Science & Sports Enthusiast
+          </span>
+          <div className="h-[1px] w-12 bg-accent/50 self-center"></div>
+        </motion.div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Modern Scroll Indicator */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+        animate={{ y: [0, 12, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-10 flex flex-col items-center gap-3"
       >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center gap-2"
-        >
-          <span className="text-xs tracking-widest text-foreground/40 font-bold uppercase">
-            Scroll
-          </span>
-          <div className="w-px h-12 bg-gradient-to-b from-accent/50 to-transparent"></div>
-        </motion.div>
+        <div className="w-6 h-10 border-2 border-foreground/20 rounded-full flex justify-center p-1">
+          <div className="w-1 h-2 bg-accent rounded-full"></div>
+        </div>
       </motion.div>
     </section>
   );
