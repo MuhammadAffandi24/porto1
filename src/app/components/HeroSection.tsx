@@ -149,14 +149,14 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="absolute inset-0 w-full h-full bg-[#050505]"
+            className="absolute inset-0 w-screen h-screen overflow-hidden bg-[#050505]"
             onMouseDown={handleMouseDown}
             onClick={handleCanvasClick}
           >
             <Spline
               scene="https://prod.spline.design/vm1UdBShWmQDEw0c/scene.splinecode"
               onLoad={() => setIsMain3DLoaded(true)}
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "100vw", height: "100vh" }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent pointer-events-none" />
 
