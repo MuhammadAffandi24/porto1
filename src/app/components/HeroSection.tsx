@@ -15,9 +15,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
 
   useEffect(() => {
     document.body.style.overflow = hasEntered ? "unset" : "hidden";
-    return () => {
-      document.body.style.overflow = "unset";
-    };
+    return () => { document.body.style.overflow = "unset"; };
   }, [hasEntered]);
 
   const handleStarterClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -42,7 +40,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
 
-    console.log(`鼠标 Mapped Click -> x:${x.toFixed(2)} y:${y.toFixed(2)}`);
+    console.log(`🖱️ x:${x.toFixed(2)} y:${y.toFixed(2)}`);
 
     if (x < 0.44) return;
 
@@ -56,7 +54,10 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
   };
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-[#050505] z-10 select-none">
+    <section
+      className="relative w-full bg-[#050505] z-10 select-none"
+      style={{ height: "100vh", maxWidth: "100vw", overflow: "hidden" }}
+    >
       <AnimatePresence mode="wait">
         {!hasEntered ? (
           <motion.div
@@ -65,27 +66,34 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
             exit={{ opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
             onClick={handleStarterClick}
-            className={`absolute inset-0 w-full h-full z-50 bg-[#050505] ${
-              isStarterLoaded ? "cursor-pointer" : "cursor-wait"
-            }`}
+            style={{ position: "absolute", inset: 0, overflow: "hidden" }}
+            className={`z-50 bg-[#050505] ${isStarterLoaded ? "cursor-pointer" : "cursor-wait"}`}
           >
-            {/* ✨ BACKGROUND GLOWS (Efek Pendaran Neon Estetik) */}
+            {/* Background glows */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
               <div className="absolute top-1/4 -left-10 w-[600px] h-[600px] bg-[#1a233a]/40 rounded-full blur-[120px]" />
               <div className="absolute bottom-1/4 -right-10 w-[600px] h-[600px] bg-[#4a1a1e]/40 rounded-full blur-[140px]" />
             </div>
 
-            {/* Container Canvas Robot 3D */}
-            <div className="absolute inset-0 w-full h-full overflow-hidden z-10">
+            {/* Spline canvas — full, no zoom transform */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                overflow: "hidden",
+              }}
+            >
               <Spline
                 scene="https://prod.spline.design/EX2xSXS1xmHoINoW/scene.splinecode"
                 onLoad={() => setIsStarterLoaded(true)}
-                style={{ width: "100%", height: "100%" }}
+                style={{ width: "100%", height: "100%", display: "block" }}
               />
               <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/10 via-transparent to-[#050505] pointer-events-none" />
             </div>
 
-            {/* 💧 Ripple Effect Overlays */}
+            {/* Ripple */}
             {ripple && (
               <motion.span
                 initial={{ opacity: 0.8, scale: 0 }}
@@ -102,7 +110,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
               />
             )}
 
-            {/* Teks Atas */}
+            {/* Teks atas */}
             <div className="absolute top-16 w-full text-center z-20 pointer-events-none">
               <motion.h2
                 initial={{ opacity: 0, y: -10 }}
@@ -113,22 +121,17 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
               </motion.h2>
             </div>
 
-            {/* Teks Bawah */}
+            {/* Teks bawah */}
             <div className="absolute bottom-16 w-full text-center z-20 pointer-events-none">
               {isStarterLoaded ? (
                 <motion.div
                   animate={{ opacity: [0.4, 1, 0.4] }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 2,
-                    ease: "easeInOut",
-                  }}
+                  transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
                   className="flex flex-col items-center gap-2"
                 >
                   <p className="text-sm tracking-[0.3em] text-white font-bold">
                     CLICK ANYWHERE TO ENTER
                   </p>
-                  <span className="text-[10px] tracking-widest text-zinc-500 font-medium"></span>
                 </motion.div>
               ) : (
                 <div className="flex flex-col items-center gap-3">
@@ -141,22 +144,19 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
             </div>
           </motion.div>
         ) : (
-          /* =========================================================
-             STAGE 2: KEYBOARD WORKSPACE
-             ========================================================= */
           <motion.div
             key="main-workspace"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="absolute inset-0 w-screen h-screen overflow-hidden bg-[#050505]"
+            style={{ position: "absolute", inset: 0, overflow: "hidden" }}
             onMouseDown={handleMouseDown}
             onClick={handleCanvasClick}
           >
             <Spline
               scene="https://prod.spline.design/vm1UdBShWmQDEw0c/scene.splinecode"
               onLoad={() => setIsMain3DLoaded(true)}
-              style={{ width: "100vw", height: "100vh" }}
+              style={{ width: "100%", height: "100%", display: "block" }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent pointer-events-none" />
 
@@ -168,8 +168,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
                 className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 pointer-events-none select-none text-center"
               >
                 <p className="text-[10px] uppercase tracking-[0.25em] text-zinc-400/60 font-bold animate-bounce">
-                  ⌨️ Klik sekali pada tombol macro keyboard untuk navigasi
-                  halaman
+                  ⌨️ Klik sekali pada tombol macro keyboard untuk navigasi halaman
                 </p>
               </motion.div>
             )}
