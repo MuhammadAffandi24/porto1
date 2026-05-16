@@ -11,11 +11,15 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
   const [isStarterLoaded, setIsStarterLoaded] = useState(false);
   const [isMain3DLoaded, setIsMain3DLoaded] = useState(false);
   const [ripple, setRipple] = useState<{ x: number; y: number } | null>(null);
-  const mouseDownPos = useRef<{ x: number; y: number } | null>(null);
+  const touchStartPos = useRef<{ x: number; y: number; time: number } | null>(
+    null,
+  );
 
   useEffect(() => {
     document.body.style.overflow = hasEntered ? "unset" : "hidden";
-    return () => { document.body.style.overflow = "unset"; };
+    return () => {
+      document.body.style.overflow = "unset";
+    };
   }, [hasEntered]);
 
   const handleStarterClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -25,14 +29,54 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
     setTimeout(() => setHasEntered(true), 600);
   };
 
+  const handleStarterTouch = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isStarterLoaded) return;
+    const touch = e.changedTouches[0];
+    const rect = e.currentTarget.getBoundingClientRect();
+    setRipple({ x: touch.clientX - rect.left, y: touch.clientY - rect.top });
+    setTimeout(() => setHasEntered(true), 600);
+  };
+
+  // Touch start — catat posisi dan waktu
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    const touch = e.touches[0];
+    touchStartPos.current = {
+      x: touch.clientX,
+      y: touch.clientY,
+      time: Date.now(),
+    };
+  };
+
+  // Touch end — cek apakah tap atau swipe
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!touchStartPos.current) return;
+
+    const touch = e.changedTouches[0];
+    const dx = Math.abs(touch.clientX - touchStartPos.current.x);
+    const dy = Math.abs(touch.clientY - touchStartPos.current.y);
+    const duration = Date.now() - touchStartPos.current.time;
+
+    // Kalau gerak lebih dari 10px atau tahan lebih dari 300ms = swipe/drag, skip
+    if (dx > 10 || dy > 10 || duration > 300) return;
+
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (touch.clientX - rect.left) / rect.width;
+    const y = (touch.clientY - rect.top) / rect.height;
+
+    console.log(`👆 Touch x:${x.toFixed(2)} y:${y.toFixed(2)}`);
+
+    navigateByPosition(x, y);
+  };
+
+  // Mouse click (desktop)
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    mouseDownPos.current = { x: e.clientX, y: e.clientY };
+    touchStartPos.current = { x: e.clientX, y: e.clientY, time: Date.now() };
   };
 
   const handleCanvasClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (mouseDownPos.current) {
-      const dx = Math.abs(e.clientX - mouseDownPos.current.x);
-      const dy = Math.abs(e.clientY - mouseDownPos.current.y);
+    if (touchStartPos.current) {
+      const dx = Math.abs(e.clientX - touchStartPos.current.x);
+      const dy = Math.abs(e.clientY - touchStartPos.current.y);
       if (dx > 5 || dy > 5) return;
     }
 
@@ -40,8 +84,12 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
 
-    console.log(`🖱️ x:${x.toFixed(2)} y:${y.toFixed(2)}`);
+    console.log(`🖱️ Click x:${x.toFixed(2)} y:${y.toFixed(2)}`);
 
+    navigateByPosition(x, y);
+  };
+
+  const navigateByPosition = (x: number, y: number) => {
     if (x < 0.44) return;
 
     if (y < 0.55) {
@@ -66,16 +114,15 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
             exit={{ opacity: 0, scale: 0.98 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
             onClick={handleStarterClick}
+            onTouchEnd={handleStarterTouch}
             style={{ position: "absolute", inset: 0, overflow: "hidden" }}
             className={`z-50 bg-[#050505] ${isStarterLoaded ? "cursor-pointer" : "cursor-wait"}`}
           >
-            {/* Background glows */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
               <div className="absolute top-1/4 -left-10 w-[600px] h-[600px] bg-[#1a233a]/40 rounded-full blur-[120px]" />
               <div className="absolute bottom-1/4 -right-10 w-[600px] h-[600px] bg-[#4a1a1e]/40 rounded-full blur-[140px]" />
             </div>
 
-            {/* Spline canvas — full, no zoom transform */}
             <div
               style={{
                 position: "absolute",
@@ -93,7 +140,6 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
               <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/10 via-transparent to-[#050505] pointer-events-none" />
             </div>
 
-            {/* Ripple */}
             {ripple && (
               <motion.span
                 initial={{ opacity: 0.8, scale: 0 }}
@@ -110,7 +156,6 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
               />
             )}
 
-            {/* Teks atas */}
             <div className="absolute top-16 w-full text-center z-20 pointer-events-none">
               <motion.h2
                 initial={{ opacity: 0, y: -10 }}
@@ -121,12 +166,15 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
               </motion.h2>
             </div>
 
-            {/* Teks bawah */}
             <div className="absolute bottom-16 w-full text-center z-20 pointer-events-none">
               {isStarterLoaded ? (
                 <motion.div
                   animate={{ opacity: [0.4, 1, 0.4] }}
-                  transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 2,
+                    ease: "easeInOut",
+                  }}
                   className="flex flex-col items-center gap-2"
                 >
                   <p className="text-sm tracking-[0.3em] text-white font-bold">
@@ -152,6 +200,8 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
             style={{ position: "absolute", inset: 0, overflow: "hidden" }}
             onMouseDown={handleMouseDown}
             onClick={handleCanvasClick}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
             <Spline
               scene="https://prod.spline.design/vm1UdBShWmQDEw0c/scene.splinecode"
@@ -168,7 +218,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
                 className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 pointer-events-none select-none text-center"
               >
                 <p className="text-[10px] uppercase tracking-[0.25em] text-zinc-400/60 font-bold animate-bounce">
-                  ⌨️ Klik sekali pada tombol macro keyboard untuk navigasi halaman
+                  ⌨️ Tap keyboard untuk navigasi halaman
                 </p>
               </motion.div>
             )}
