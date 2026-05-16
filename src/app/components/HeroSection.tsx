@@ -1,96 +1,181 @@
-import { motion } from "motion/react";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Spline from "@splinetool/react-spline";
 
-export function HeroSection() {
-  const data = {
-    name: "Muhammad Affandi",
-    university: "Universitas Sebelas Maret",
-    major: "S1 Sains Data",
-    photo: "/images/pp.png",
+interface HeroSectionProps {
+  onNavigate: (section: string) => void;
+}
+
+export function HeroSection({ onNavigate }: HeroSectionProps) {
+  const [hasEntered, setHasEntered] = useState(false);
+  const [isStarterLoaded, setIsStarterLoaded] = useState(false);
+  const [isMain3DLoaded, setIsMain3DLoaded] = useState(false);
+  const [ripple, setRipple] = useState<{ x: number; y: number } | null>(null);
+  const mouseDownPos = useRef<{ x: number; y: number } | null>(null);
+
+  useEffect(() => {
+    document.body.style.overflow = hasEntered ? "unset" : "hidden";
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [hasEntered]);
+
+  const handleStarterClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isStarterLoaded) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    setRipple({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    setTimeout(() => setHasEntered(true), 600);
+  };
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    mouseDownPos.current = { x: e.clientX, y: e.clientY };
+  };
+
+  const handleCanvasClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (mouseDownPos.current) {
+      const dx = Math.abs(e.clientX - mouseDownPos.current.x);
+      const dy = Math.abs(e.clientY - mouseDownPos.current.y);
+      if (dx > 5 || dy > 5) return;
+    }
+
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+
+    console.log(`鼠标 Mapped Click -> x:${x.toFixed(2)} y:${y.toFixed(2)}`);
+
+    if (x < 0.44) return;
+
+    if (y < 0.55) {
+      if (x < 0.78) onNavigate("bio");
+      else onNavigate("hobbies");
+    } else {
+      if (x < 0.68) onNavigate("experience");
+      else onNavigate("projects");
+    }
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background">
-      {/* Background with Stadium Overlay */}
-      <div
-        className="absolute inset-0 bg-cover bg-center scale-105"
-        style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1686168523188-8949907234a5?auto=format&fit=crop&q=80&w=1920')`,
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40"></div>
-        <div className="absolute inset-0 bg-radial-gradient from-transparent to-background/90"></div>
-      </div>
-
-      {/* Content Container */}
-      <div className="relative z-10 flex flex-col items-center text-center px-6">
-        {/* Profile Image with Glow Effect */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative mb-8"
-        >
-          <div className="absolute -inset-4 bg-accent/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="relative p-1 rounded-full bg-gradient-to-tr from-accent via-secondary to-accent">
-            <img
-              src={data.photo}
-              alt={data.name}
-              className="w-40 h-40 md:w-56 md:h-56 rounded-full object-cover border-4 border-background shadow-2xl"
-            />
-          </div>
-        </motion.div>
-
-        {/* Text Details */}
-        <div className="space-y-3">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-4xl md:text-7xl font-black text-foreground tracking-tighter uppercase italic"
-          >
-            {data.name}
-          </motion.h1>
-
+    <section className="relative h-screen w-full overflow-hidden bg-[#050505] z-10 select-none">
+      <AnimatePresence mode="wait">
+        {!hasEntered ? (
           <motion.div
+            key="starter-screen"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 0.98 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            onClick={handleStarterClick}
+            className={`absolute inset-0 w-full h-full z-50 bg-[#050505] ${
+              isStarterLoaded ? "cursor-pointer" : "cursor-wait"
+            }`}
+          >
+            {/* ✨ BACKGROUND GLOWS (Efek Pendaran Neon Estetik) */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+              <div className="absolute top-1/4 -left-10 w-[600px] h-[600px] bg-[#1a233a]/40 rounded-full blur-[120px]" />
+              <div className="absolute bottom-1/4 -right-10 w-[600px] h-[600px] bg-[#4a1a1e]/40 rounded-full blur-[140px]" />
+            </div>
+
+            {/* Container Canvas Robot 3D */}
+            <div className="absolute inset-0 w-full h-full overflow-hidden z-10">
+              <Spline
+                scene="https://prod.spline.design/EX2xSXS1xmHoINoW/scene.splinecode"
+                onLoad={() => setIsStarterLoaded(true)}
+                style={{ width: "100%", height: "100%" }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/10 via-transparent to-[#050505] pointer-events-none" />
+            </div>
+
+            {/* 💧 Ripple Effect Overlays */}
+            {ripple && (
+              <motion.span
+                initial={{ opacity: 0.8, scale: 0 }}
+                animate={{ opacity: 0, scale: 24 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                style={{
+                  position: "absolute",
+                  left: ripple.x,
+                  top: ripple.y,
+                  transform: "translate(-50%, -50%)",
+                  pointerEvents: "none",
+                }}
+                className="w-12 h-12 bg-transparent border-[3px] border-cyan-400/50 rounded-full shadow-[0_0_30px_rgba(34,211,238,0.4)] z-40"
+              />
+            )}
+
+            {/* Teks Atas */}
+            <div className="absolute top-16 w-full text-center z-20 pointer-events-none">
+              <motion.h2
+                initial={{ opacity: 0, y: -10 }}
+                animate={isStarterLoaded ? { opacity: 1, y: 0 } : {}}
+                className="text-xs tracking-[0.4em] text-zinc-500 font-bold uppercase"
+              >
+                Interactive Workspace
+              </motion.h2>
+            </div>
+
+            {/* Teks Bawah */}
+            <div className="absolute bottom-16 w-full text-center z-20 pointer-events-none">
+              {isStarterLoaded ? (
+                <motion.div
+                  animate={{ opacity: [0.4, 1, 0.4] }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 2,
+                    ease: "easeInOut",
+                  }}
+                  className="flex flex-col items-center gap-2"
+                >
+                  <p className="text-sm tracking-[0.3em] text-white font-bold">
+                    CLICK ANYWHERE TO ENTER
+                  </p>
+                  <span className="text-[10px] tracking-widest text-zinc-500 font-medium"></span>
+                </motion.div>
+              ) : (
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-5 h-5 border-2 border-zinc-700 border-t-cyan-400 rounded-full animate-spin" />
+                  <p className="text-[10px] tracking-[0.25em] text-zinc-500 font-bold uppercase animate-pulse">
+                    Please Wait....
+                  </p>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        ) : (
+          /* =========================================================
+             STAGE 2: KEYBOARD WORKSPACE
+             ========================================================= */
+          <motion.div
+            key="main-workspace"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="flex flex-col items-center gap-1"
+            transition={{ duration: 0.6 }}
+            className="absolute inset-0 w-full h-full bg-[#050505]"
+            onMouseDown={handleMouseDown}
+            onClick={handleCanvasClick}
           >
-            <span className="px-4 py-1 bg-accent/10 border border-accent/20 rounded-full text-accent text-sm md:text-lg font-bold tracking-widest uppercase">
-              {data.major}
-            </span>
-            <p className="text-foreground/60 text-lg md:text-xl font-medium mt-2">
-              {data.university}
-            </p>
+            <Spline
+              scene="https://prod.spline.design/vm1UdBShWmQDEw0c/scene.splinecode"
+              onLoad={() => setIsMain3DLoaded(true)}
+              style={{ width: "100%", height: "100%" }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent pointer-events-none" />
+
+            {isMain3DLoaded && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 pointer-events-none select-none text-center"
+              >
+                <p className="text-[10px] uppercase tracking-[0.25em] text-zinc-400/60 font-bold animate-bounce">
+                  ⌨️ Klik sekali pada tombol macro keyboard untuk navigasi
+                  halaman
+                </p>
+              </motion.div>
+            )}
           </motion.div>
-        </div>
-
-        {/* Call to Action / Social Placeholder */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="mt-12 flex gap-4"
-        >
-          <div className="h-[1px] w-12 bg-accent/50 self-center"></div>
-          <span className="text-xs uppercase tracking-[0.3em] text-foreground/40 font-bold">
-            Data Science & Sports Enthusiast
-          </span>
-          <div className="h-[1px] w-12 bg-accent/50 self-center"></div>
-        </motion.div>
-      </div>
-
-      {/* Modern Scroll Indicator */}
-      <motion.div
-        animate={{ y: [0, 12, 0] }}
-        transition={{ duration: 2, repeat: Infinity }}
-        className="absolute bottom-10 flex flex-col items-center gap-3"
-      >
-        <div className="w-6 h-10 border-2 border-foreground/20 rounded-full flex justify-center p-1">
-          <div className="w-1 h-2 bg-accent rounded-full"></div>
-        </div>
-      </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
