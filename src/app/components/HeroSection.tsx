@@ -103,7 +103,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
 
   return (
     <section
-      className="relative w-full bg-[#050505] z-10 select-none"
+      className="relative w-full bg-[#0A0B10] z-10 select-none"
       style={{ height: "100vh", maxWidth: "100vw", overflow: "hidden" }}
     >
       <AnimatePresence mode="wait">
@@ -116,11 +116,12 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
             onClick={handleStarterClick}
             onTouchEnd={handleStarterTouch}
             style={{ position: "absolute", inset: 0, overflow: "hidden" }}
-            className={`z-50 bg-[#050505] ${isStarterLoaded ? "cursor-pointer" : "cursor-wait"}`}
+            className={`z-50 bg-[#0A0B10] ${isStarterLoaded ? "cursor-pointer" : "cursor-wait"}`}
           >
+            {/* Ambient Glow Lingkaran Efek Cahaya (Starter Screen) */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-              <div className="absolute top-1/4 -left-10 w-[600px] h-[600px] bg-[#1a233a]/40 rounded-full blur-[120px]" />
-              <div className="absolute bottom-1/4 -right-10 w-[600px] h-[600px] bg-[#4a1a1e]/40 rounded-full blur-[140px]" />
+              <div className="absolute top-1/4 -left-10 w-[600px] h-[600px] bg-[#1E2A44]/40 rounded-full blur-[120px]" />
+              <div className="absolute bottom-1/4 -right-10 w-[600px] h-[600px] bg-[#4A0E0E]/40 rounded-full blur-[140px]" />
             </div>
 
             <div
@@ -133,11 +134,11 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
               }}
             >
               <Spline
-                scene="https://prod.spline.design/EX2xSXS1xmHoINoW/scene.splinecode"
+                scene="https://prod.spline.design/819SYIyurkDoqlLV/scene.splinecode"
                 onLoad={() => setIsStarterLoaded(true)}
                 style={{ width: "100%", height: "100%", display: "block" }}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/10 via-transparent to-[#050505] pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-b from-[#0A0B10]/10 via-transparent to-[#0A0B10] pointer-events-none" />
             </div>
 
             {ripple && (
@@ -162,7 +163,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
                 animate={isStarterLoaded ? { opacity: 1, y: 0 } : {}}
                 className="text-xs tracking-[0.4em] text-zinc-500 font-bold uppercase"
               >
-                Interactive Workspace
+                Muhammad Affandi's Portofolio
               </motion.h2>
             </div>
 
@@ -203,12 +204,19 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
+            {/* Ambient Glow Lingkaran Efek Cahaya Tambahan di Belakang Canvas Utama */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+              <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-[#4A0E0E]/20 rounded-full blur-[130px]" />
+              <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[#1E2A44]/20 rounded-full blur-[150px]" />
+            </div>
+
+            {/* Komponen Spline Menggunakan Link Public URL .splinecode Terbaru */}
             <Spline
               scene="https://prod.spline.design/vm1UdBShWmQDEw0c/scene.splinecode"
               onLoad={() => setIsMain3DLoaded(true)}
               style={{ width: "100%", height: "100%", display: "block" }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0B10] via-transparent to-transparent pointer-events-none" />
 
             {isMain3DLoaded && (
               <motion.div
